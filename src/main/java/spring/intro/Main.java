@@ -1,5 +1,6 @@
 package spring.intro;
 
+import java.util.Arrays;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import spring.intro.config.AppConfig;
 import spring.intro.model.User;
