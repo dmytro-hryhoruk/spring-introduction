@@ -1,7 +1,7 @@
 package spring.intro.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,11 +37,9 @@ public class UserController {
 
     @GetMapping("/")
     public List<UserResponseDto> getAll() {
-        List<UserResponseDto> userResponseDtoList = new ArrayList<>();
-        for (User user : userService.listUsers()) {
-            userResponseDtoList.add(assembleUserResponseDto(user));
-        }
-        return userResponseDtoList;
+        return userService.listUsers().stream()
+                .map(this::assembleUserResponseDto)
+                .collect(Collectors.toList());
     }
 
     private UserResponseDto assembleUserResponseDto(User user) {
