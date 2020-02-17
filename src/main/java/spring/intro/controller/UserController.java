@@ -32,21 +32,22 @@ public class UserController {
     @GetMapping("/get/{user_id}")
     public UserResponseDto get(@PathVariable(name = "user_id") Long id) {
         User user = userService.get(id);
-        UserResponseDto userDto = new UserResponseDto();
-        userDto.setLogin(user.getLogin());
-        userDto.setPassword(user.getPassword());
-        return userDto;
+        return assembleUserResponseDto(user);
     }
 
     @GetMapping("/")
     public List<UserResponseDto> getAll() {
         List<UserResponseDto> userResponseDtoList = new ArrayList<>();
         for (User user : userService.listUsers()) {
-            UserResponseDto userDto = new UserResponseDto();
-            userDto.setLogin(user.getLogin());
-            userDto.setPassword(user.getPassword());
-            userResponseDtoList.add(userDto);
+            userResponseDtoList.add(assembleUserResponseDto(user));
         }
         return userResponseDtoList;
+    }
+
+    private UserResponseDto assembleUserResponseDto(User user) {
+        UserResponseDto userDto = new UserResponseDto();
+        userDto.setLogin(user.getLogin());
+        userDto.setPassword(user.getPassword());
+        return userDto;
     }
 }
